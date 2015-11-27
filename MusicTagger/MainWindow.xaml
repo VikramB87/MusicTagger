@@ -1,0 +1,43 @@
+﻿<Window x:Class="MusicTagger.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MusicTagger" SizeChanged="MainWindowSizeChanged" Height="797.687" Width="1123.224" Closing="OnQuit">
+    <Grid Margin="0,0,-8,2">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="156*"/>
+            <ColumnDefinition Width="961*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid ItemsSource="{Binding}" x:Name="libraryGrid" HorizontalAlignment="Left" Margin="0,33,0,0" VerticalAlignment="Top" Width="874" Height="442" AutoGenerateColumns="False" Grid.Column="1" CanUserAddRows="False" CanUserDeleteRows="False" RowEditEnding="RowEdited" Grid.ColumnSpan="3" SelectionChanged="OnSelectionChanged" GotFocus="OnGridFocus">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Set Metadata from file name (Artist - Title)" Click="MenuItem_Click"/>
+                    <MenuItem Header="Set Metadata from file name (Album - Title)" Click="MenuItem1_Click"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Title, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" HeaderStringFormat="" Header="Title"/>
+                <DataGridTextColumn Binding="{Binding Artist, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" HeaderStringFormat="" Header="Artist"/>
+                <DataGridTextColumn Binding="{Binding Album, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" HeaderStringFormat="" Header="Album"/>
+                <DataGridTextColumn Binding="{Binding Genre, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" HeaderStringFormat="" Header="Genre"/>
+                <DataGridTextColumn Binding="{Binding Year, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="Year"/>
+                <DataGridTextColumn Binding="{Binding Extension}" ClipboardContentBinding="{x:Null}" HeaderStringFormat="" Header="Extension" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Location}" ClipboardContentBinding="{x:Null}" HeaderStringFormat="" Header="Location" Width="80" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="btnAdd" HorizontalAlignment="Left" Margin="10,511,0,0" VerticalAlignment="Top" Width="75" Click="ShowAddAudioContextMenu" Height="29" Content="Add... " Grid.Column="1" Grid.ColumnSpan="2"/>
+        <ListBox x:Name="lbTags" Grid.Column="3" HorizontalAlignment="Left" Height="397" Margin="735,33,0,0" VerticalAlignment="Top" Width="197" ItemsSource="{Binding}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <CheckBox IsChecked="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}" Content="{Binding Name}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <TextBox x:Name="txtTag" Grid.Column="3" HorizontalAlignment="Left" Height="23" Margin="735,452,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="146"/>
+        <Button x:Name="btnAddTag" Content="+" Grid.Column="3" HorizontalAlignment="Left" Height="25" Margin="886,452,0,0" VerticalAlignment="Top" Width="25" Click="OnAddTag"/>
+        <Button x:Name="btnDelTag" Content="-" Grid.Column="3" HorizontalAlignment="Left" Height="25" Margin="916,452,0,0" VerticalAlignment="Top" Width="25" Click="OnDelTagButtonClicked"/>
+        <Button Content="Generate Playlist..." Grid.Column="3" HorizontalAlignment="Left" Height="29" Margin="735,492,0,0" VerticalAlignment="Top" Width="108" Click="OnBtnGeneratePlaylistClick"/>
+        <TextBox x:Name="txtSearch" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="439" Grid.ColumnSpan="2" TextChanged="OnSearchTextChanged"/>
+    </Grid>
+</Window>
